@@ -1,6 +1,9 @@
 const fs = require("fs");
 const path = require("path");
 const url = require("url");
+const wordsPath = path.join(__dirname, "words.txt");
+const wordsBuffer = fs.readFileSync(wordsPath);
+const wordsArray = wordsBuffer.toString().split("\n");
 
 const PUBLIC_DIR = path.join(__dirname, "..", "public");
 const MIME = {
@@ -33,20 +36,15 @@ module.exports = function router(req, res) {
   //("\n");
   if (pathname === "/api/autocomplete") {
     const q = query.q;
-    fs.readFile(path.join(__dirname, "words.txt"), (err, data) => {
-      if (err) {
-        throw err;
-      }
-      const words = data.toString().split("\n");
-      const results = words
-        .filter((words) => {
-          return words.startsWith(q);
-        })
-        .slice(0, 10);
-      // TODO: implement autocomplete logic using query.q
-      res.writeHead(200, { "Content-Type": "application/json" });
-      res.end(JSON.stringify({ results }));
-    });
+    const results = wordsArray
+      .filter((words) => {
+        return words.startsWith(q);
+      })
+      .slice(0, 10);
+    // TODO: implement autocomplete logic using query.q
+    res.writeHead(200, { "Content-Type": "application/json" });
+    res.end(JSON.stringify({ results }));
+
     return;
   }
 
