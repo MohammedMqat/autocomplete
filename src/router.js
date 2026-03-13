@@ -28,14 +28,25 @@ module.exports = function router(req, res) {
 
   res.on("finish", () => {
     const ms = Date.now() - start;
-    console.log(`${req.method} ${pathname} ${res.statusCode} ${ms}ms`);
+    console.log(`${req.method} ${req.url} ${res.statusCode} ${ms}ms`);
   });
-
+  //("\n");
   if (pathname === "/api/autocomplete") {
-    const result = query.filter();
-    // TODO: implement autocomplete logic using query.q
-    res.writeHead(200, { "Content-Type": "application/json" });
-    res.end(JSON.stringify({ results: [] }));
+    const q = query.q;
+    fs.readFile(path.join(__dirname, "words.txt"), (err, data) => {
+      if (err) {
+        throw err;
+      }
+      const words = data.toString().split("\n");
+      const results = words
+        .filter((words) => {
+          return words.startsWith(q);
+        })
+        .slice(0, 10);
+      // TODO: implement autocomplete logic using query.q
+      res.writeHead(200, { "Content-Type": "application/json" });
+      res.end(JSON.stringify({ results }));
+    });
     return;
   }
 
