@@ -1,13 +1,16 @@
 {
   "$schema": "./node_modules/oxlint/configuration_schema.json",
   "plugins": null,
-  "categories": { 
+  "categories": {
     "correctness": "error",
     "suspicious": "error",
     "perf": "error",
     "style": "error"
-   },
-  "rules": {},
+  },
+  "rules": {
+    "no-ternary": "off",
+    "eslint/no-magic-numbers": "off"
+  },
   "settings": {
     "jsx-a11y": {
       "polymorphicPropName": null,
