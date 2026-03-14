@@ -15,4 +15,3 @@ input.addEventListener("input", async () => {
     list.innerHTML = results.map((r) => `<li>${r}</li>`).join("");
   }, 300);
 });
-list = "Hi im erroring here";
