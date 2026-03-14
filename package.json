@@ -9,9 +9,14 @@
   "scripts": {
     "dev": "node --watch src/server.js",
     "start": "node src/server.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "oxlint",
+    "lint:fix": "oxlint --fix"
   },
   "dependencies": {
     "env2": "^2.2.2"
+  },
+  "devDependencies": {
+    "oxlint": "^1.55.0"
   }
 }
